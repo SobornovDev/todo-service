@@ -1,4 +1,4 @@
-package com.sobornov.todo_service.repository
+package com.sobornov.todo_service.repository.model
 
 enum class TaskStatus {
     NOT_DONE,

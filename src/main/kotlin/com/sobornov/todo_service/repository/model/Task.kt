@@ -1,7 +1,9 @@
-package com.sobornov.todo_service.repository
+package com.sobornov.todo_service.repository.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -19,6 +21,7 @@ class Task(
     var description: String,
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     var status: TaskStatus,
 
     @Column(nullable = false)
@@ -28,5 +31,5 @@ class Task(
     var deadline: Instant,
 
     @Column
-    var finishedAt: Instant
+    var finishedAt: Instant? = null
 )

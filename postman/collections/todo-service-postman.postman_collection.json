@@ -1,0 +1,43 @@
+{
+  "info": {
+    "_postman_id": "641cbe5d-6ed3-4dd1-a654-38ac52030441",
+    "name": "todo-service-postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "http://localhost:8080/api/v1/tasks",
+      "id": "466d778c-2064-4aae-a063-7274314e730a",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"description\": \"Blumen für meine Frau kaufen\",\n    \"deadline\": \"2026-03-08T18:00:00Z\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/tasks",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "tasks"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
