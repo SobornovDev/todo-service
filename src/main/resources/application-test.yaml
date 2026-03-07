@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:todo_service_db;MODE=PostgreSQL
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
