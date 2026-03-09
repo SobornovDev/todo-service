@@ -6,7 +6,7 @@
   },
   "item": [
     {
-      "name": "http://localhost:8080/api/v1/tasks",
+      "name": "create new task",
       "id": "466d778c-2064-4aae-a063-7274314e730a",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
@@ -34,6 +34,71 @@
             "api",
             "v1",
             "tasks"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update description",
+      "id": "2edc218e-a287-47e8-abf9-5f2e6afc3f06",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"description\": \"Bier trinken\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/tasks/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "tasks",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update status",
+      "id": "42cad823-462c-4c0d-9a04-0dae54568c69",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"status\": \"NOT_DONE\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/tasks/2/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "tasks",
+            "2",
+            "status"
           ]
         }
       },
