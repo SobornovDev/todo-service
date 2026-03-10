@@ -62,6 +62,10 @@ class TaskServiceImpl(
                 it.status = status
             } else throw InvalidStatusTransitionException("Invalid status transition: from ${it.status} to $status")
         } ?: throw NotFoundException("Task with id:$requestId not found")
+
+        if (status == TaskStatus.DONE) {
+            task.finishedAt = Instant.now()
+        }
         repository.save(task)
         return task.toTaskResponse()
     }
