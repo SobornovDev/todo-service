@@ -4,6 +4,7 @@ import com.sobornov.todo_service.controller.model.TaskCreateRequest
 import com.sobornov.todo_service.controller.model.TaskResponse
 import com.sobornov.todo_service.exception.InvalidStatusTransitionException
 import com.sobornov.todo_service.exception.NotFoundException
+import com.sobornov.todo_service.extension.toTaskResponse
 import com.sobornov.todo_service.repository.TaskRepository
 import com.sobornov.todo_service.repository.model.Task
 import com.sobornov.todo_service.repository.model.TaskStatus
@@ -26,14 +27,20 @@ class TaskServiceImpl(
                 createdAt = Instant.now()
             )
         )
-        return TaskResponse(
-            task.id,
-            task.description,
-            task.status,
-            task.createdAt,
-            task.deadline,
-            task.finishedAt
-        )
+        return task.toTaskResponse()
+    }
+
+    override fun getTaskById(taskId: Long): TaskResponse {
+        val task = repository.findByIdOrNull(taskId)
+            ?: throw NotFoundException("Task with id: $taskId not found")
+        return task.toTaskResponse()
+    }
+
+    override fun getAllByStatus(status: TaskStatus?): List<TaskResponse> {
+        val tasks = status?.let {
+            repository.findAllByStatus(status)
+        } ?: repository.findAll()
+        return tasks.map { it.toTaskResponse() }
     }
 
     override fun updateDescription(requestId: Long, description: String): TaskResponse {
@@ -42,14 +49,7 @@ class TaskServiceImpl(
             it.description = description
         } ?: throw NotFoundException("Task with id: $requestId not found")
         repository.save(task)
-        return TaskResponse(
-            task.id,
-            task.description,
-            task.status,
-            task.createdAt,
-            task.deadline,
-            task.finishedAt
-        )
+        return task.toTaskResponse()
     }
 
     override fun updateStatus(
@@ -63,13 +63,6 @@ class TaskServiceImpl(
             } else throw InvalidStatusTransitionException("Invalid status transition: from ${it.status} to $status")
         } ?: throw NotFoundException("Task with id:$requestId not found")
         repository.save(task)
-        return TaskResponse(
-            task.id,
-            task.description,
-            task.status,
-            task.createdAt,
-            task.deadline,
-            task.finishedAt
-        )
+        return task.toTaskResponse()
     }
 }

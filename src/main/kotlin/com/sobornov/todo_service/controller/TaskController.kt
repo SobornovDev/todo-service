@@ -4,14 +4,17 @@ import com.sobornov.todo_service.controller.model.TaskCreateRequest
 import com.sobornov.todo_service.controller.model.TaskResponse
 import com.sobornov.todo_service.controller.model.TaskUpdateDescriptionRequest
 import com.sobornov.todo_service.controller.model.TaskUpdateStatusRequest
+import com.sobornov.todo_service.repository.model.TaskStatus
 import com.sobornov.todo_service.service.TaskService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
@@ -30,6 +33,16 @@ class TaskController(
             .buildAndExpand(created.id)
             .toUri()
         return ResponseEntity.created(location).body(created)
+    }
+
+    @GetMapping("/{id}")
+    fun getTaskById(@PathVariable id: Long): ResponseEntity<TaskResponse> {
+        return ResponseEntity.ok(taskService.getTaskById(id))
+    }
+
+    @GetMapping
+    fun getAllByStatus(@RequestParam status: TaskStatus?): ResponseEntity<List<TaskResponse>> {
+        return ResponseEntity.ok(taskService.getAllByStatus(status))
     }
 
     @PatchMapping("/{requestId}/description")

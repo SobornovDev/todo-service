@@ -55,7 +55,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/api/v1/tasks/2",
+          "raw": "http://localhost:8080/api/v1/tasks/1/description",
           "protocol": "http",
           "host": [
             "localhost"
@@ -65,7 +65,8 @@
             "api",
             "v1",
             "tasks",
-            "2"
+            "1",
+            "description"
           ]
         }
       },
@@ -79,7 +80,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"status\": \"NOT_DONE\"\n}",
+          "raw": "{\n    \"status\": \"DONE\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -87,7 +88,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/api/v1/tasks/2/status",
+          "raw": "http://localhost:8080/api/v1/tasks/1/status",
           "protocol": "http",
           "host": [
             "localhost"
@@ -97,8 +98,66 @@
             "api",
             "v1",
             "tasks",
-            "2",
+            "1",
             "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get task info",
+      "id": "72f70a85-d8c8-431b-8cb4-f3658504d3d7",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/tasks/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "tasks",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get tasks by status",
+      "id": "79533f04-ac85-452f-9694-3fe21e98e56a",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/tasks?status=NOT_DONE",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "tasks"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "NOT_DONE",
+              "uuid": "ef3de4b1-b4e6-4489-b478-f5dba8792b57"
+            }
           ]
         }
       },
