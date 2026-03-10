@@ -2,6 +2,7 @@ package com.sobornov.todo_service.service.impl
 
 import com.sobornov.todo_service.controller.model.TaskCreateRequest
 import com.sobornov.todo_service.controller.model.TaskResponse
+import com.sobornov.todo_service.exception.InvalidStatusTransitionException
 import com.sobornov.todo_service.exception.NotFoundException
 import com.sobornov.todo_service.repository.TaskRepository
 import com.sobornov.todo_service.repository.model.Task
@@ -39,7 +40,7 @@ class TaskServiceImpl(
         val task = repository.findByIdOrNull(requestId)
         task?.let {
             it.description = description
-        } ?: throw NotFoundException("Task with id:$requestId not found")
+        } ?: throw NotFoundException("Task with id: $requestId not found")
         repository.save(task)
         return TaskResponse(
             task.id,
@@ -59,7 +60,7 @@ class TaskServiceImpl(
         task?.let {
             if (it.status.isTransitionAvailable(status)) {
                 it.status = status
-            }
+            } else throw InvalidStatusTransitionException("Invalid status transition: from ${it.status} to $status")
         } ?: throw NotFoundException("Task with id:$requestId not found")
         repository.save(task)
         return TaskResponse(
