@@ -10,7 +10,6 @@ The service allows creating and managing tasks with a description and a deadline
 
 - A task with status `DONE` will not be transitioned to `PAST_DUE` by the scheduler, even if its deadline has passed. Completed work stays completed. In production this would be a business decision worth clarifying.
 - `DONE -> NOT_DONE` transition is allowed by the API, though in production it would be preferable to create a new task instead. Kept as-is per the task requirements.
-- Это assumption — добавь в секцию Assumptions:
 - Modifying the description of a `PAST_DUE` task is forbidden, same as status changes. The spec only explicitly forbids status changes via REST, but allowing description edits on an immutable task felt inconsistent.
 - The deadline field is required on task creation.
 - The scheduler runs every minute. In production, the frequency would depend on business requirements for status accuracy.
@@ -30,7 +29,7 @@ The service allows creating and managing tasks with a description and a deadline
 
 - **`@Scheduled` with a single-threaded pool** is appropriate here because there is no distributed deployment concern. In a multi-instance production environment, distributed locking (e.g. ShedLock) would be required to prevent duplicate executions.
 
-- **Optimistic locking** (`@Version`). The race condition between the scheduler and a concurrent REST update (e.g. user marks `DONE` at the same moment the scheduler sets `PAST_DUE`) handled with optimistic locking (`@Version`).
+- **Optimistic locking** (`@Version`). Protects against concurrent REST API calls on the same task (e.g. two simultaneous PATCH requests). Note that the scheduler uses a bulk JPQL UPDATE which bypasses JPA's version check by design – the scheduler's atomicity is instead guaranteed by the `WHERE status = 'NOT_DONE'` condition in the query itself, which acts as a natural guard against double-transition.
 
 ## Tech Stack
 
