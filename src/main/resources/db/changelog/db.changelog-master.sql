@@ -10,3 +10,6 @@ CREATE TABLE tasks
     deadline    TIMESTAMP    NOT NULL,
     finished_at TIMESTAMP
 );
+
+--changeset sobornov:2
+ALTER TABLE tasks ADD COLUMN version BIGINT NOT NULL DEFAULT 0;

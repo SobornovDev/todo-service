@@ -46,6 +46,9 @@ class TaskServiceImpl(
     override fun updateDescription(requestId: Long, description: String): TaskResponse {
         val task = repository.findByIdOrNull(requestId)
         task?.let {
+            if (it.status == TaskStatus.PAST_DUE) {
+                throw IllegalStateException("Task with id: $requestId is past due and cannot be modified")
+            }
             it.description = description
         } ?: throw NotFoundException("Task with id: $requestId not found")
         repository.save(task)

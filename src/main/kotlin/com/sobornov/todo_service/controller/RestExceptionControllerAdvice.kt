@@ -29,6 +29,14 @@ class RestExceptionControllerAdvice {
         )
     }
 
+    @ExceptionHandler(IllegalStateException::class)
+    fun handleIllegalState(ex: IllegalStateException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity<ErrorResponse>(
+            ErrorResponse(ex.message),
+            HttpStatus.BAD_REQUEST
+        )
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidation(ex: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
         val message = ex.bindingResult.fieldErrors

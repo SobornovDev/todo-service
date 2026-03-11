@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.persistence.Version
 import java.time.Instant
 
 @Entity
@@ -31,5 +32,8 @@ class Task(
     var deadline: Instant,
 
     @Column
-    var finishedAt: Instant? = null
+    var finishedAt: Instant? = null,
+
+    @Version
+    var version: Long = 0
 )
