@@ -11,6 +11,7 @@ import com.sobornov.todo_service.repository.model.TaskStatus
 import com.sobornov.todo_service.service.TaskService
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 
 @Service
@@ -30,12 +31,14 @@ class TaskServiceImpl(
         return task.toTaskResponse()
     }
 
+    @Transactional(readOnly = true)
     override fun getTaskById(taskId: Long): TaskResponse {
         val task = repository.findByIdOrNull(taskId)
             ?: throw NotFoundException("Task with id: $taskId not found")
         return task.toTaskResponse()
     }
 
+    @Transactional(readOnly = true)
     override fun getAllByStatus(status: TaskStatus?): List<TaskResponse> {
         val tasks = status?.let {
             repository.findAllByStatus(status)
@@ -43,6 +46,7 @@ class TaskServiceImpl(
         return tasks.map { it.toTaskResponse() }
     }
 
+    @Transactional
     override fun updateDescription(requestId: Long, description: String): TaskResponse {
         val task = repository.findByIdOrNull(requestId)
         task?.let {
@@ -55,6 +59,7 @@ class TaskServiceImpl(
         return task.toTaskResponse()
     }
 
+    @Transactional
     override fun updateStatus(
         requestId: Long,
         status: TaskStatus

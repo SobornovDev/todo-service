@@ -54,7 +54,6 @@ class RestExceptionControllerAdvice {
 
     @ExceptionHandler(Exception::class)
     fun handleUnexpected(ex: Exception): ResponseEntity<ErrorResponse> {
-        println(ex::class.qualifiedName)
         return ResponseEntity(
             ErrorResponse("Unexpected error occurred"),
             HttpStatus.INTERNAL_SERVER_ERROR
